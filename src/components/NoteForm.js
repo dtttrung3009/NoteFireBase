@@ -1,12 +1,22 @@
 import React, { Component } from "react";
-
-export default class NoteForm extends Component {
+import { connect } from "react-redux";
+class NoteForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      noteTitle: "",
-      noteContent: "",
+      key: "",
+      title: "",
+      content: "",
     };
+  }
+  componentWillMount() {
+    if (this.props.editItem) {
+      this.setState({
+        key: this.props.editItem.key,
+        content: this.props.editItem.content,
+        title: this.props.editItem.title,
+      });
+    }
   }
   isChange = (e) => {
     let name = e.target.name;
@@ -15,31 +25,53 @@ export default class NoteForm extends Component {
       [name]: value,
     });
   };
-  addData=(title, content)=>{
-    let item={};
-    item.title=title;
-    item.content=content;
-   this.props.getData(item)
-  }
+  saveButton = (title, content, event) => {
+    // event.preventDefault();
+    if (this.state.key) {
+      let item = {};
+      item.key = this.state.key;
+      item.title = this.state.title;
+      item.content = this.state.content;
+      this.props.sendEditDataToStore(item);
+      this.props.changeStatusForm();
+      this.setState({
+        key: "",
+        title: "",
+        content: "",
+      });
+    } else {
+      let item = {};
+      item.title = title;
+      item.content = content;
+      this.props.addDataStore(item);
+      this.setState({
+        key: "",
+        title: "",
+        content: "",
+      });
+    }
+  };
   render() {
     return (
       <div className="col-4">
-        <form>
+        <form method="post">
           <div className="form-group">
             <label>Tiêu đề note</label>
             <input
+              defaultValue={this.props.editItem.title}
               onChange={(event) => this.isChange(event)}
               type="text"
               className="form-control"
-              name="noteTitle"
+              name="title"
               placeholder="Tiêu đề note"
             />
           </div>
           <div className="form-group">
             <label>Nội dung note</label>
             <textarea
+              defaultValue={this.props.editItem.content}
               className="form-control"
-              name="noteContent"
+              name="content"
               placeholder="Nội dung note"
               rows="3"
               onChange={(event) => this.isChange(event)}
@@ -48,8 +80,12 @@ export default class NoteForm extends Component {
           <button
             type="submit"
             className="btn btn-primary btn-block"
-            onClick={() =>
-              this.addData(this.state.noteTitle, this.state.noteContent)
+            onClick={(event) =>
+              this.saveButton(
+                this.state.title,
+                this.state.content,
+                event
+              )
             }
           >
             Lưu
@@ -59,3 +95,22 @@ export default class NoteForm extends Component {
     );
   }
 }
+const mapStateToProps = (state, ownProps) => {
+  return {
+    editItem: state.editItem,
+  };
+};
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    addDataStore: (item) => {
+      dispatch({ type: "ADD_DATA", item });
+    },
+    sendEditDataToStore: (editItem) => {
+      dispatch({ type: "EDIT", editItem });
+    },
+    changeStatusForm: () => {
+      dispatch({ type: "CHANGE_EDIT_STATUS" });
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(NoteForm);

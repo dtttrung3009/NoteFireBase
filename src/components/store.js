@@ -17,10 +17,15 @@ const allReducer = (state = noteInitialState, action) => {
       return { ...state, editItem: action.editItem };
     case "EDIT":
       noteData.child(action.editItem.key).update({
-        title:action.editItem.title,
-        content:action.editItem.content
+        title: action.editItem.title,
+        content: action.editItem.content,
       });
-      return { ...state, editItem:{} };
+      return { ...state, editItem: {} };
+    case "FORMAT_FORM":
+      return { ...state, editItem: {} };
+    case "DELETE":
+      noteData.child(action.key).remove();
+      return { ...state, editItem: action.editItem };
     default:
       return state;
   }

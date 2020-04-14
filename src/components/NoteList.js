@@ -8,7 +8,7 @@ export default class NoteList extends Component {
       dataFirebase: [],
     };
   }
-  componentWillMount() {
+  query = () => {
     noteData.once("value", (notes) => {
       var arrayData = [];
       notes.forEach((element) => {
@@ -25,18 +25,26 @@ export default class NoteList extends Component {
         dataFirebase: arrayData,
       });
     });
-  }
+  };
   getData = () => {
-    // console.log(this.state.dataFirebase);
     return this.state.dataFirebase.map((value, key) => {
-      return <NodeItem 
-      id={key}
-       key={key} 
-       title={value.title} 
-       content={value.content} 
-       value={value}/>;
+      return (
+        <NodeItem
+          id={key}
+          key={key}
+          title={value.title}
+          content={value.content}
+          value={value}
+        />
+      );
     });
   };
+  componentWillMount() {
+    this.query();
+  }
+  componentWillUpdate() {
+    this.query();
+  }
   render() {
     return (
       <div className="col">

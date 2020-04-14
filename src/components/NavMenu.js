@@ -1,10 +1,20 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
-export default class NavMenu extends Component {
+class NavMenu extends Component {
+  handleAdd=(e)=>{
+    e.preventDefault();
+    this.props.formatForm();
+    this.props.openForm();
+  };
+  handeHome=(e)=>{
+    e.preventDefault();
+    this.props.openForm();
+  }
   render() {
     return (
       <nav
-        className="navbar navbar-expand-sm navbar-dark"
+        className="navbar navbar-expand-sm navbar-dark mb-4"
         style={{backgroundColor:'black'}}
       >
         <a className="navbar-brand" href="#">
@@ -25,13 +35,13 @@ export default class NavMenu extends Component {
         >
           <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
             <li className="nav-item active">
-              <a className="nav-link" href="#">
-                Home <span className="sr-only">(current)</span>
+              <a className="nav-link" href="#" onClick={(event)=>this.handeHome(event)}>
+                Home
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                Xem danh sách note
+              <a className="nav-link" href="#" onClick={(event)=>this.handleAdd(event)}>
+                Thêm ghi chú
               </a>
             </li>
           </ul>
@@ -40,3 +50,15 @@ export default class NavMenu extends Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    openForm: () => {
+      dispatch({ type: "CHANGE_EDIT_STATUS" });
+    },
+    formatForm: () => {
+      dispatch({ type: "FORMAT_FORM" });
+    },
+  }
+}
+export default connect(null, mapDispatchToProps)(NavMenu);

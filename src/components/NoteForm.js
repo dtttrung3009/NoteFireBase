@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 class NoteForm extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +27,7 @@ class NoteForm extends Component {
     });
   };
   saveButton = (title, content, event) => {
-    // event.preventDefault();
+    event.preventDefault();
     if (this.state.key) {
       let item = {};
       item.key = this.state.key;
@@ -39,6 +40,7 @@ class NoteForm extends Component {
         title: "",
         content: "",
       });
+      toast.success("Sửa thành công");
     } else {
       let item = {};
       item.title = title;
@@ -49,6 +51,8 @@ class NoteForm extends Component {
         title: "",
         content: "",
       });
+      toast.info("Thêm mới thành công");
+      this.props.changeStatusForm();
     }
   };
   render() {
@@ -58,7 +62,7 @@ class NoteForm extends Component {
           <div className="form-group">
             <label>Tiêu đề note</label>
             <input
-              defaultValue={this.props.editItem.title}
+              value={this.state.title}
               onChange={(event) => this.isChange(event)}
               type="text"
               className="form-control"
@@ -69,7 +73,7 @@ class NoteForm extends Component {
           <div className="form-group">
             <label>Nội dung note</label>
             <textarea
-              defaultValue={this.props.editItem.content}
+              value={this.state.content}
               className="form-control"
               name="content"
               placeholder="Nội dung note"
@@ -81,11 +85,7 @@ class NoteForm extends Component {
             type="submit"
             className="btn btn-primary btn-block"
             onClick={(event) =>
-              this.saveButton(
-                this.state.title,
-                this.state.content,
-                event
-              )
+              this.saveButton(this.state.title, this.state.content, event)
             }
           >
             Lưu

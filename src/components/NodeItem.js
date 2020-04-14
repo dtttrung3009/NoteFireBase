@@ -1,13 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { toast} from "react-toastify";
 class NodeItem extends Component {
   actionClick=()=>{
     this.props.changeStatusForm();
     this.props.getEditData(this.props.value)
   };
+  actionDelete=()=>{
+    this.props.getKeyDelete(this.props.value.key);
+    toast.error("Xóa thành công");
+  };
   render() {
     return (
-      <div className="card">
+      <div className="card mt-1">
         <div className="card-header" role="tab">
           <h5 className="mb-0">
             <div className="row">
@@ -24,7 +29,7 @@ class NodeItem extends Component {
               </div>
               <div className="col-3">
                 <button className="btn btn-outline-info" onClick={this.actionClick}>Sửa</button>
-                <button className="btn btn-outline-secondary">Xóa</button>
+                <button className="btn btn-outline-secondary" onClick={()=>this.actionDelete()}>Xóa</button>
               </div>
             </div>
           </h5>
@@ -48,6 +53,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     getEditData: (editItem) => {
       dispatch({ type: "GET_EDIT_DATA",editItem });
+    },
+    getKeyDelete: (key) => {
+      dispatch({ type: "DELETE",key });
     },
   };
 };

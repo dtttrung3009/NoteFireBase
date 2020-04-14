@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/NoteFireBase/static/css/main.aa4d434c.chunk.css",
+    "main.js": "/NoteFireBase/static/js/main.d66c3762.chunk.js",
+    "main.js.map": "/NoteFireBase/static/js/main.d66c3762.chunk.js.map",
+    "runtime-main.js": "/NoteFireBase/static/js/runtime-main.74a10155.js",
+    "runtime-main.js.map": "/NoteFireBase/static/js/runtime-main.74a10155.js.map",
+    "static/js/2.ca79c54a.chunk.js": "/NoteFireBase/static/js/2.ca79c54a.chunk.js",
+    "static/js/2.ca79c54a.chunk.js.map": "/NoteFireBase/static/js/2.ca79c54a.chunk.js.map",
+    "index.html": "/NoteFireBase/index.html",
+    "precache-manifest.e23795a3fbad5d3cec17e0eaaacc5e19.js": "/NoteFireBase/precache-manifest.e23795a3fbad5d3cec17e0eaaacc5e19.js",
+    "service-worker.js": "/NoteFireBase/service-worker.js",
+    "static/css/main.aa4d434c.chunk.css.map": "/NoteFireBase/static/css/main.aa4d434c.chunk.css.map",
+    "static/js/2.ca79c54a.chunk.js.LICENSE.txt": "/NoteFireBase/static/js/2.ca79c54a.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.74a10155.js",
+    "static/js/2.ca79c54a.chunk.js",
+    "static/css/main.aa4d434c.chunk.css",
+    "static/js/main.d66c3762.chunk.js"
+  ]
+}
